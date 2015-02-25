@@ -3627,11 +3627,15 @@ static void FXFormPreprocessFieldDictionary(NSMutableDictionary *dictionary)
 
 - (void)setUp
 {
-    self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[]];
+    self.accessoryView = [[UISegmentedControl alloc] initWithItems:@[]];
     [self.segmentedControl addTarget:self action:@selector(valueChanged) forControlEvents:UIControlEventValueChanged];
-    [self.contentView addSubview:self.segmentedControl];
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+}
+
+- (UISegmentedControl *)segmentedControl
+{
+    return (id)self.accessoryView;
 }
 
 - (void)layoutSubviews
