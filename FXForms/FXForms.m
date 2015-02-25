@@ -3638,11 +3638,15 @@ static void FXFormPreprocessFieldDictionary(NSMutableDictionary *dictionary)
 {
     [super layoutSubviews];
     
-    CGRect segmentedControlFrame = self.segmentedControl.frame;
-    segmentedControlFrame.origin.x = self.textLabel.frame.origin.x + self.textLabel.frame.size.width + FXFormFieldPaddingLeft;
-    segmentedControlFrame.origin.y = (self.contentView.frame.size.height - segmentedControlFrame.size.height) / 2;
-    segmentedControlFrame.size.width = self.contentView.bounds.size.width - segmentedControlFrame.origin.x - FXFormFieldPaddingRight;
-    self.segmentedControl.frame = segmentedControlFrame;
+    [self.segmentedControl sizeToFit];
+    
+    NSString *language = [[NSLocale preferredLanguages] firstObject];
+    BOOL isRTL = ([NSLocale characterDirectionForLanguage:language] == NSLocaleLanguageDirectionRightToLeft);
+    
+    if (!isRTL)
+    {
+        self.segmentedControl.frame = CGRectOffset(self.segmentedControl.frame, -CGRectGetWidth(self.segmentedControl.bounds), 0);
+    }
 }
 
 - (void)update
